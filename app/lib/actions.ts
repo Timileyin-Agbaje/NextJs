@@ -6,7 +6,9 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 const FormSchema = z.object({
-  customerId: z.string().min(1, 'Select a customer'),
+  customerId: z.string({
+  invalid_type_error: 'Please select a customer.',
+  }).min(1, 'Select a customer'),
   amount: z.coerce.number().gt(0, 'Amount must be greater than 0'),
   status: z.enum(['pending', 'paid'], {
     errorMap: () => ({ message: 'Select a status' }),
